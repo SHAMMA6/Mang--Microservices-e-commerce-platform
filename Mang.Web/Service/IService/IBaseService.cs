@@ -1,0 +1,9 @@
+﻿using Mang.Web.Models;
+
+namespace Mang.Web.Service.IService
+{
+    public interface IBaseService
+    {
+        Task<ResponseDto?> SendAsync(RequestDto requestDto);
+    }
+}
