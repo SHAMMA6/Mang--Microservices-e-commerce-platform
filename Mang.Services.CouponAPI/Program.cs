@@ -14,8 +14,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(
-    x=>x.UseSqlServer(builder.Configuration.GetConnectionString("Portal"))
-    );
+    x=>x.UseSqlServer(builder.Configuration.GetConnectionString("Portal")));
 
 
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
