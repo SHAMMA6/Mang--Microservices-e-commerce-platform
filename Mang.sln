@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mang.Web", "Mang.Web\Mang.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mang.Services.AuthAPI", "Mang.Services.AuthAPI\Mang.Services.AuthAPI.csproj", "{26F048C1-CF18-4031-BA78-4FE61EE8F948}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mang.Services.ProductAPI", "Mang.Services.ProductAPI\Mang.Services.ProductAPI.csproj", "{CC725F4A-4A2B-4548-AE7B-ECDBDF258E7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{26F048C1-CF18-4031-BA78-4FE61EE8F948}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{26F048C1-CF18-4031-BA78-4FE61EE8F948}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{26F048C1-CF18-4031-BA78-4FE61EE8F948}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CC725F4A-4A2B-4548-AE7B-ECDBDF258E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CC725F4A-4A2B-4548-AE7B-ECDBDF258E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CC725F4A-4A2B-4548-AE7B-ECDBDF258E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CC725F4A-4A2B-4548-AE7B-ECDBDF258E7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{05A6EE27-C58E-4CB1-8629-607FF66B440B} = {DCDAB8CA-74DB-4A4B-A422-885E390AB5C9}
 		{87406557-4F4B-4240-8A91-1D8B640A5E1C} = {FDF987C8-1BA3-425F-AD13-407C5880BC8D}
 		{26F048C1-CF18-4031-BA78-4FE61EE8F948} = {DCDAB8CA-74DB-4A4B-A422-885E390AB5C9}
+		{CC725F4A-4A2B-4548-AE7B-ECDBDF258E7A} = {DCDAB8CA-74DB-4A4B-A422-885E390AB5C9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D6BAAF1-0475-44C5-B42B-E92C6AC33A08}

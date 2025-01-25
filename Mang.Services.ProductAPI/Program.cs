@@ -1,13 +1,9 @@
 using AutoMapper;
-using Mang.Services.CouponAPI;
-using Mang.Services.CouponAPI.Data;
-using Mang.Services.CouponAPI.Extentions;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Mang.Services.ProductAPI;
+using Mang.Services.ProductAPI.Data;
+using Mang.Services.ProductAPI.Extentions;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,19 +38,17 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 builder.Services.AddDbContext<AppDbContext>(
-    x=>x.UseSqlServer(builder.Configuration.GetConnectionString("Portal")));
+    x => x.UseSqlServer(builder.Configuration.GetConnectionString("Portal")));
 
 
 IMapper mapper = MappingConfig.RegisterMaps().CreateMapper();
 builder.Services.AddSingleton(mapper);
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
- // Extention
+// Extention
 builder.AddAppAuthetication();
 
 builder.Services.AddAuthorization();
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -70,7 +64,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
 
 ApplyMigration();
 app.Run();

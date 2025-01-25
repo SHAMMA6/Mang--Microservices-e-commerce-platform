@@ -1,12 +1,12 @@
-﻿﻿@using Mang.Web.Utility
+﻿@using Mang.Web.Utility
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mango.Web</title>
+    <title>@ViewData["Title"] - Mang.Web</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+    <link rel="stylesheet" href="//cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css" />
     <link rel="stylesheet" href="~/Mango.Web.styles.css" asp-append-version="true" />
@@ -14,26 +14,24 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark  box-shadow mb-3">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mango.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Mang.Web</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-
                         @if (User.IsInRole(SD.RoleAdmin))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Content Management
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="contentDropdown" role="button" data-bs-toggle="dropdown"
+                                   aria-expanded="false">Content Management</a>
+                                <ul class="dropdown-menu" aria-labelledby="contentDropdown">
                                     <li><a class="dropdown-item" asp-controller="Coupon" asp-action="CouponIndex">Coupon</a></li>
                                     <li><a class="dropdown-item" asp-controller="Product" asp-action="ProductIndex">Product</a></li>
                                     <li><hr class="dropdown-divider"></li>
@@ -41,33 +39,31 @@
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Order" asp-action="OrderIndex">
-                                Manage Order
-                            </a>
+                            <a class="nav-link" asp-area="" asp-controller="Order" asp-action="OrderIndex">Manage Order</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " asp-area="" asp-controller="Cart" asp-action="CartIndex">
-                                &nbsp; <i class="bi bi-cart"></i>&nbsp;
+                            <a class="nav-link" asp-area="" asp-controller="Cart" asp-action="CartIndex">
+                                <i class="bi bi-cart"></i>
                             </a>
                         </li>
                     </ul>
-                    <ul class="navbar-nav">
+                    <ul class="navbar-nav ms-auto">
                         @if (!User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <a class="nav-link " asp-controller="Auth" asp-action="Login">Login</a>
+                                <a class="nav-link" asp-controller="Auth" asp-action="Login">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " asp-controller="Auth" asp-action="Register">Register</a>
+                                <a class="nav-link" asp-controller="Auth" asp-action="Register">Register</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link " href="#">Hello @User.Identity.Name</a>
+                                <a class="nav-link" href="#">Hello, @User.Identity.Name</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link " asp-controller="Auth" asp-action="Logout">Logout</a>
+                                <a class="nav-link" asp-controller="Auth" asp-action="Logout">Logout</a>
                             </li>
                         }
                     </ul>
@@ -81,10 +77,9 @@
             <partial name="_Notifications" />
         </main>
     </div>
-
-    <footer class="footer text-muted">
+    <footer class="footer text-muted bg-light mt-5 py-3">
         <div class="text-center">
-            Made with <i class="bi bi-heart-fill "></i> by Yousef Abdel-Fattah
+            Made with <i class="bi bi-heart-fill text-danger"></i> by Yousef Abdel-Fattah
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

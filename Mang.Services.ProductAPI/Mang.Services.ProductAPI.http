@@ -1,0 +1,6 @@
+@Mang.Services.ProductAPI_HostAddress = http://localhost:5121
+
+GET {{Mang.Services.ProductAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

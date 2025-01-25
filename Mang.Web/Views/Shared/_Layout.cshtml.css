@@ -1,24 +1,32 @@
-﻿﻿ /* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
-a.navbar-brand {
+﻿/* Navbar brand adjustments */
+.navbar-brand {
     white-space: normal;
     text-align: center;
-    word-break: break-all;
+    word-break: break-word;
+    font-size: 1.5rem;
 }
 
-
+/* Button styles */
 .btn-primary {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+    transition: background-color 0.3s ease;
 }
 
+    .btn-primary:hover {
+        background-color: #145a92;
+        border-color: #104c7a;
+    }
+
+/* Active link styling */
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
 }
 
+/* Utility classes */
 .border-top {
     border-top: 1px solid #e5e5e5;
 }
@@ -28,18 +36,32 @@ a.navbar-brand {
 }
 
 .box-shadow {
-    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
 }
 
+/* Footer styling */
+.footer {
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #f8f9fa;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+    .footer i {
+        vertical-align: middle;
+    }
+
+    .footer:hover i {
+        color: #dc3545;
+        transition: color 0.3s ease;
+    }
+
+/* Accessibility improvements */
 button.accept-policy {
     font-size: 1rem;
     line-height: inherit;
-}
-
-.footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px;
+    cursor: pointer;
 }

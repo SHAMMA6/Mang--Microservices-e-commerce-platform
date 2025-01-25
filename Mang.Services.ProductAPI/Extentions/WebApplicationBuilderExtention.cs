@@ -2,7 +2,7 @@
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
-namespace Mang.Services.CouponAPI.Extentions
+namespace Mang.Services.ProductAPI.Extentions
 {
     public static class WebApplicationBuilderExtentions
     {

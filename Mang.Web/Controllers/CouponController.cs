@@ -1,6 +1,4 @@
 ﻿using Mang.Web.Models;
-using Mang.Web.Service;
-using Mang.Web.Models;
 using Mang.Web.Service.IService;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
