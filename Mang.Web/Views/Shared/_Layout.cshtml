@@ -27,7 +27,7 @@
                             <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
-                       @*  @if (User.IsInRole(SD.RoleAdmin))
+                        @if (User.IsInRole(SD.RoleAdmin))
                         {
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -39,7 +39,7 @@
                                     <li><hr class="dropdown-divider"></li>
                                 </ul>
                             </li>
-                        } *@
+                        }
                         <li class="nav-item">
                             <a class="nav-link " asp-area="" asp-controller="Order" asp-action="OrderIndex">
                                 Manage Order

@@ -51,7 +51,9 @@ namespace Mang.Services.AuthAPI.Service
 
             // Generat JWT Token
 
-            var token = _jwtTokenGenerator.GenerateToken(user);
+            var roles = await _userManager.GetRolesAsync(user);
+
+            var token = _jwtTokenGenerator.GenerateToken(user,roles);
 
             UserDto userDto = new UserDto()
             {
@@ -74,7 +76,7 @@ namespace Mang.Services.AuthAPI.Service
 
 
 
-        public async Task<string> Register(RegistretionRequestDto registretionRequestDto)
+        public async Task<string> Register(RegistrationRequestDto registretionRequestDto)
         {
             ApplicationUser user = new ApplicationUser()
             {

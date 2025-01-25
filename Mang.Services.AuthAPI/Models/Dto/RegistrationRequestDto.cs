@@ -1,6 +1,6 @@
 ﻿namespace Mang.Services.AuthAPI.Models.Dto
 {
-    public class RegistretionRequestDto
+    public class RegistrationRequestDto
     {
         public string Name { get; set; }
         public string Email { get; set; }

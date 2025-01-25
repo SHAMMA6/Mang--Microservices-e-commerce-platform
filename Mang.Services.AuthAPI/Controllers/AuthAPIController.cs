@@ -21,8 +21,8 @@ namespace Mang.Services.AuthAPI.Controllers
 
 
 
-        [HttpGet("register")]
-        public async Task<IActionResult> Register([FromBody]RegistretionRequestDto model)
+        [HttpPost("register")]
+        public async Task<IActionResult> Register([FromBody]RegistrationRequestDto model)
         {
             var errorMesseg = await _authService.Register(model);
             if (!string.IsNullOrEmpty(errorMesseg))
@@ -34,7 +34,7 @@ namespace Mang.Services.AuthAPI.Controllers
             return Ok(_response);
         }
 
-        [HttpGet("login")]
+        [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody]LoginRequestDto model)
         {
             var loginResponse = await _authService.Login(model);
@@ -48,8 +48,8 @@ namespace Mang.Services.AuthAPI.Controllers
             return Ok(_response);
         }
 
-        [HttpGet("AssignRole")]
-        public async Task<IActionResult> AssignRole([FromBody] RegistretionRequestDto model)
+        [HttpPost("AssignRole")]
+        public async Task<IActionResult> AssignRole([FromBody] RegistrationRequestDto model)
         {
             var assignRoleSuccessful = await _authService.AssignRole(model.Email,model.Role);
             if (!assignRoleSuccessful)

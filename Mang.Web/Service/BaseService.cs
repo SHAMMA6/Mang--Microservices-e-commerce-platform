@@ -2,6 +2,7 @@
 using Mang.Web.Service.IService;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Serialization;
 using static Mang.Web.Utility.SD;
@@ -13,19 +14,30 @@ namespace Mang.Web.Service
     public class BaseService : IBaseService
     {
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly ITokenProvider _tokenProvider;
 
-        public BaseService(IHttpClientFactory httpClientFactory)
+        public BaseService(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider)
         {
             _httpClientFactory = httpClientFactory;
+            _tokenProvider = tokenProvider;
         }
-        public async Task<ResponseDto?> SendAsync(RequestDto requestDto)
+        public async Task<ResponseDto?> SendAsync(RequestDto requestDto, bool withBearer = true)
         {
             try
             {
                 HttpClient client = _httpClientFactory.CreateClient("MangAPI");
                 HttpRequestMessage message = new();
                 message.Headers.Add("Accept", "application/json");
-                //Token
+
+                //Token 5 15 
+                if (withBearer)
+                {
+                    var token = _tokenProvider.GetToken();
+                    if (token != null)
+                    {
+                        message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                    }
+                }
 
                 message.RequestUri = new Uri(requestDto.Url);
                 if (requestDto.Data != null)
