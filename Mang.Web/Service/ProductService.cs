@@ -8,18 +8,19 @@ namespace Mang.Web.Service
     public class ProductService : IProductService
     {
         private readonly IBaseService _baseService;
-
         public ProductService(IBaseService baseService)
         {
             _baseService = baseService;
         }
+
         public async Task<ResponseDto?> CreateProductsAsync(ProductDto productDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
                 Data = productDto,
-                Url = SD.ProductAPIBase + "/api/product/"
+                Url = SD.ProductAPIBase + "/api/product",
+                ContentType = SD.ContentType.MultipartFormData
             });
         }
 
@@ -37,18 +38,11 @@ namespace Mang.Web.Service
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.GET,
-                Url = SD.ProductAPIBase + "/api/product/"
+                Url = SD.ProductAPIBase + "/api/product"
             });
         }
 
-        public async Task<ResponseDto?> GetProductAsync(string name)
-        {
-            return await _baseService.SendAsync(new RequestDto()
-            {
-                ApiType = SD.ApiType.GET,
-                Url = SD.ProductAPIBase + "/api/product/GetByName/" + name
-            });
-        }
+
 
         public async Task<ResponseDto?> GetProductByIdAsync(int id)
         {
@@ -65,7 +59,8 @@ namespace Mang.Web.Service
             {
                 ApiType = SD.ApiType.PUT,
                 Data = productDto,
-                Url = SD.ProductAPIBase + "/api/product/" + productDto.Name
+                Url = SD.ProductAPIBase + "/api/product",
+                ContentType = SD.ContentType.MultipartFormData
             });
         }
     }

@@ -41,7 +41,7 @@ namespace Mang.Services.CouponAPI.Migrations
 
                     b.HasKey("CouponId");
 
-                    b.ToTable("Coupones");
+                    b.ToTable("Coupones", (string)null);
 
                     b.HasData(
                         new
