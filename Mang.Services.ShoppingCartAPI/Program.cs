@@ -1,4 +1,5 @@
 using AutoMapper;
+using Mang.MessageBusService;
 using Mang.Services.ShoppingCartAPI;
 using Mang.Services.ShoppingCartAPI.Data;
 using Mang.Services.ShoppingCartAPI.Extentions;

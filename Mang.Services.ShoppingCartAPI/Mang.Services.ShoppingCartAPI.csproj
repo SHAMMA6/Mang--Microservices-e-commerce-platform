@@ -30,4 +30,8 @@
 
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mang.MessageBusService\Mang.MessageBusService.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Mang.MessageBusService;
 using Mang.Services.ShoppingCartAPI.Data;
 using Mang.Services.ShoppingCartAPI.Models;
 using Mang.Services.ShoppingCartAPI.Models.Dto;
@@ -19,12 +20,14 @@ namespace Mang.Services.ShoppingCartAPI.Controllers
         private IProductService _productService;
         private ICouponService _couponService;
         private IConfiguration _configuration;
-        
+        private readonly IMessageBus _messageBus;
+
         public CartAPIController(AppDbContext db,
             IMapper mapper,
             IProductService productService,
             ICouponService couponService,
-            IConfiguration configuration)
+            IConfiguration configuration,
+            IMessageBus messageBus)
         {
             _db = db;
             _productService = productService;
@@ -32,6 +35,7 @@ namespace Mang.Services.ShoppingCartAPI.Controllers
             _mapper = mapper;
             _couponService = couponService;
             _configuration = configuration;
+            _messageBus = messageBus;
         }
         [HttpGet("GetCart/{userId}")]
         public async Task<ResponseDto> GetCart(string userId)
@@ -94,21 +98,21 @@ namespace Mang.Services.ShoppingCartAPI.Controllers
             return _response;
         }
 
-        //[HttpPost("EmailCartRequest")]
-        //public async Task<object> EmailCartRequest([FromBody] CartDto cartDto)
-        //{
-        //    try
-        //    {
-        //        await _messageBus.PublishMessage(cartDto, _configuration.GetValue<string>("TopicAndQueueNames:EmailShoppingCartQueue"));
-        //        _response.Resulte = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        _response.IsSuccess = false;
-        //        _response.Message = ex.ToString();
-        //    }
-        //    return _response;
-        //}
+        [HttpPost("EmailCartRequest")]
+        public async Task<object> EmailCartRequest([FromBody] CartDto cartDto)
+        {
+            try
+            {
+                await _messageBus.PublishMessageAsync(cartDto, _configuration.GetValue<string>("QueueNames:EmailCartQueue"));
+                _response.Resulte = true;
+            }
+            catch (Exception ex)
+            {
+                _response.IsSuccess = false;
+                _response.Message = ex.ToString();
+            }
+            return _response;
+        }
 
 
 
