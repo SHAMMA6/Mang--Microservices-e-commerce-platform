@@ -21,6 +21,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mang.Services.ProductAPI", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mang.Services.ShoppingCartAPI", "Mang.Services.ShoppingCartAPI\Mang.Services.ShoppingCartAPI.csproj", "{B6D36A4B-D1D9-484E-9AAA-3318CBC250B7}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Informations", "Informations", "{CF7F34AD-DE42-4991-9BD0-F3ACEB424C97}"
+	ProjectSection(SolutionItems) = preProject
+		Instractions.txt = Instractions.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -1,0 +1,4 @@
+If You Want To Set Up The Message Bus Service, You Need To Follow The Instructions Below:
+
+It Should Be At The Integration Layer.
+We Have To Create Account In Azure Portal With Accsess To Service Bus.
