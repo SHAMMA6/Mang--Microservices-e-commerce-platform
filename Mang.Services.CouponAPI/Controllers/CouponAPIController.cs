@@ -13,31 +13,29 @@ namespace Mang.Services.CouponAPI.Controllers
     [Authorize]
     public class CouponAPIController : ControllerBase
     {
-        private readonly AppDbContext _dbContext;
-        private readonly IMapper _mapper;
-        private readonly ResponseDto _response;
+        private readonly AppDbContext _db;
+        private ResponseDto _response;
+        private IMapper _mapper;
 
-        public CouponAPIController(AppDbContext dbContext, IMapper mapper)
+        public CouponAPIController(AppDbContext db, IMapper mapper)
         {
-            _dbContext = dbContext;
+            _db = db;
             _mapper = mapper;
             _response = new ResponseDto();
         }
-
 
         [HttpGet]
         public ResponseDto Get()
         {
             try
             {
-                IEnumerable<Coupon> objList = _dbContext.Coupones.ToList();
+                IEnumerable<Coupon> objList = _db.Coupones.ToList();
                 _response.Resulte = _mapper.Map<IEnumerable<CouponDto>>(objList);
-                
             }
             catch (Exception ex)
             {
-                _response.IsSuccess = false ;
-                _response.Message = ex.Message ;
+                _response.IsSuccess = false;
+                _response.Message = ex.Message;
             }
             return _response;
         }
@@ -48,7 +46,7 @@ namespace Mang.Services.CouponAPI.Controllers
         {
             try
             {
-                Coupon obj = _dbContext.Coupones.First(f => f.CouponId == id);
+                Coupon obj = _db.Coupones.First(u => u.CouponId == id);
                 _response.Resulte = _mapper.Map<CouponDto>(obj);
             }
             catch (Exception ex)
@@ -65,7 +63,7 @@ namespace Mang.Services.CouponAPI.Controllers
         {
             try
             {
-                Coupon obj = _dbContext.Coupones.First(f => f.CouponCode.ToLower() == code.ToLower());
+                Coupon obj = _db.Coupones.First(u => u.CouponCode.ToLower() == code.ToLower());
                 _response.Resulte = _mapper.Map<CouponDto>(obj);
             }
             catch (Exception ex)
@@ -78,13 +76,27 @@ namespace Mang.Services.CouponAPI.Controllers
 
         [HttpPost]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Post([FromBody] CouponDto couponDto )
+        public ResponseDto Post([FromBody] CouponDto couponDto)
         {
             try
             {
                 Coupon obj = _mapper.Map<Coupon>(couponDto);
-                _dbContext.Coupones.Add(obj);
-                _dbContext.SaveChanges();
+                _db.Coupones.Add(obj);
+                _db.SaveChanges();
+
+
+
+                var options = new Stripe.CouponCreateOptions
+                {
+                    AmountOff = (long)(couponDto.DiscountAmount * 100),
+                    Name = couponDto.CouponCode,
+                    Currency = "usd",
+                    Id = couponDto.CouponCode,
+                };
+                var service = new Stripe.CouponService();
+                service.Create(options);
+
+
                 _response.Resulte = _mapper.Map<CouponDto>(obj);
             }
             catch (Exception ex)
@@ -95,6 +107,7 @@ namespace Mang.Services.CouponAPI.Controllers
             return _response;
         }
 
+
         [HttpPut]
         [Authorize(Roles = "ADMIN")]
         public ResponseDto Put([FromBody] CouponDto couponDto)
@@ -102,8 +115,9 @@ namespace Mang.Services.CouponAPI.Controllers
             try
             {
                 Coupon obj = _mapper.Map<Coupon>(couponDto);
-                _dbContext.Coupones.Update(obj);
-                _dbContext.SaveChanges();
+                _db.Coupones.Update(obj);
+                _db.SaveChanges();
+
                 _response.Resulte = _mapper.Map<CouponDto>(obj);
             }
             catch (Exception ex)
@@ -115,14 +129,21 @@ namespace Mang.Services.CouponAPI.Controllers
         }
 
         [HttpDelete]
+        [Route("{id:int}")]
         [Authorize(Roles = "ADMIN")]
-        public ResponseDto Delet(int id)
+        public ResponseDto Delete(int id)
         {
             try
             {
-                Coupon obj = _dbContext.Coupones.First(f=>f.CouponId == id);
-                _dbContext.Coupones.Remove(obj);
-                _dbContext.SaveChanges();
+                Coupon obj = _db.Coupones.First(u => u.CouponId == id);
+                _db.Coupones.Remove(obj);
+                _db.SaveChanges();
+
+
+                var service = new Stripe.CouponService();
+                service.Delete(obj.CouponCode);
+
+
             }
             catch (Exception ex)
             {
@@ -131,6 +152,5 @@ namespace Mang.Services.CouponAPI.Controllers
             }
             return _response;
         }
-
     }
 }
