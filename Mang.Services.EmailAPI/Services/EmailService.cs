@@ -1,6 +1,7 @@
 ﻿using Mang.Services.EmailAPI.Data;
 using Mang.Services.EmailAPI.Models;
 using Mang.Services.EmailAPI.Models.Dto;
+using Mang.Services.EmailAPI.Message;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 

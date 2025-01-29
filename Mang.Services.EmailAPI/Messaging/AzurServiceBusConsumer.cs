@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Azure.Messaging.ServiceBus;
 using Mang.Services.EmailAPI.Models.Dto;
 using Mang.Services.EmailAPI.Services;
+using Mang.Services.EmailAPI.Message;
 
 namespace Mang.Services.EmailAPI.Messaging
 {
@@ -77,7 +78,7 @@ namespace Mang.Services.EmailAPI.Messaging
             try
             {
                 //TODO - try to log email
-                await _emailService.EmailCartAndLog(objMessage);
+                await _emailService.EmailCart(objMessage);
                 await args.CompleteMessageAsync(args.Message);
             }
             catch (Exception ex)
@@ -116,7 +117,7 @@ namespace Mang.Services.EmailAPI.Messaging
             try
             {
                 //TODO - try to log email
-                await _emailService.RegisterUserEmailAndLog(email);
+                await _emailService.RegisterUserEmail(email);
                 await args.CompleteMessageAsync(args.Message);
             }
             catch (Exception ex)

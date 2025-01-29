@@ -1,0 +1,6 @@
+@Mang.Services.RewardAPI_HostAddress = http://localhost:5248
+
+GET {{Mang.Services.RewardAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

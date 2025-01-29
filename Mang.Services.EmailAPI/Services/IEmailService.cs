@@ -1,4 +1,5 @@
 ﻿using Mang.Services.EmailAPI.Models.Dto;
+using Mang.Services.EmailAPI.Message;
 
 namespace Mang.Services.EmailAPI.Services
 {
