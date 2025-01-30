@@ -4,6 +4,7 @@ using Mang.Services.OrderAPI.Models.Dto;
 using Mang.Services.OrderAPI.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+
 using Microsoft.AspNetCore.Mvc;
 using Mang.Services.OrderAPI.Data;
 using Mang.Services.OrderAPI.Service.IService;
@@ -182,7 +183,7 @@ namespace Mang.Services.OrderAPI.Controllers
                 var service = new SessionService();
                 Session session = service.Get(orderHeader.StripeSessionId);
 
-                var paymentIntentService = new PaymentIntentService();
+                var paymentIntentService = new Stripe.PaymentIntentService();
                 PaymentIntent paymentIntent = paymentIntentService.Get(session.PaymentIntentId);
 
                 if (paymentIntent.Status == "succeeded")
@@ -198,7 +199,7 @@ namespace Mang.Services.OrderAPI.Controllers
                         UserId = orderHeader.UserId
                     };
                     string topicName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
-                    await _messageBus.PublishMessage(rewardsDto, topicName);
+                    await _messageBus.PublishMessageAsync(rewardsDto, topicName);
                     _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
                 }
 

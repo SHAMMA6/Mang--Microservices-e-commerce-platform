@@ -1,0 +1,39 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Mang.Services.CouponAPI\\Mang.Services.CouponAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Mang.Web\\Mang.Web.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Mang.Services.AuthAPI\\Mang.Services.AuthAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Mang.Services.ProductAPI\\Mang.Services.ProductAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Mang.Services.ShoppingCartAPI\\Mang.Services.ShoppingCartAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Mang.Services.OrderAPI\\Mang.Services.OrderAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Mang.Services.RewardAPI\\Mang.Services.RewardAPI.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Mang.GatewaySolution\\Mang.GatewaySolution.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

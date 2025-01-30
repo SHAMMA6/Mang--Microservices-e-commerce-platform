@@ -29,6 +29,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mang.Services.OrderAPI", "M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mang.Services.RewardAPI", "Mang.Services.RewardAPI\Mang.Services.RewardAPI.csproj", "{0A7ED7A1-033E-4FD6-A8CD-7F44FA5831F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mang.GatewaySolution", "Mang.GatewaySolution\Mang.GatewaySolution.csproj", "{C67C0F0B-4611-40C0-851A-182E6278E3E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,10 @@ Global
 		{0A7ED7A1-033E-4FD6-A8CD-7F44FA5831F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A7ED7A1-033E-4FD6-A8CD-7F44FA5831F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A7ED7A1-033E-4FD6-A8CD-7F44FA5831F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C67C0F0B-4611-40C0-851A-182E6278E3E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C67C0F0B-4611-40C0-851A-182E6278E3E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C67C0F0B-4611-40C0-851A-182E6278E3E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C67C0F0B-4611-40C0-851A-182E6278E3E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -85,6 +91,7 @@ Global
 		{F2691FFF-8388-434C-9D26-ACA182AAB2C4} = {DCDAB8CA-74DB-4A4B-A422-885E390AB5C9}
 		{BA83A6A4-B6EE-4CD8-B68F-2080F2F922FF} = {DCDAB8CA-74DB-4A4B-A422-885E390AB5C9}
 		{0A7ED7A1-033E-4FD6-A8CD-7F44FA5831F9} = {DCDAB8CA-74DB-4A4B-A422-885E390AB5C9}
+		{C67C0F0B-4611-40C0-851A-182E6278E3E1} = {5EA400B1-508E-497C-810F-5BA4D2C3FBEE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {9D6BAAF1-0475-44C5-B42B-E92C6AC33A08}

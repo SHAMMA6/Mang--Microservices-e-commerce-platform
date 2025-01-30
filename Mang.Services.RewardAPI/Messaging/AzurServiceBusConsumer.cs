@@ -7,7 +7,7 @@ using Mang.Services.RewardAPI.Services;
 using Mang.Services.RewardAPI.Messaging;
 using Mang.Services.RewardAPI.Message;
 
-namespace Mang.Services.EmailAPI.Messaging
+namespace Mang.Services.RewardAPI.Messaging
 {
     public class AzureServiceBusConsumer : IAzureServiceBusConsumer
     {

@@ -1,7 +1,7 @@
-using Mang.Services.EmailAPI.Messaging;
+using Mang.Services.RewardAPI.Messaging;
 using Mang.Services.RewardAPI.Data;
 using Mang.Services.RewardAPI.Extentions;
-using Mang.Services.RewardAPI.Messaging;
+
 using Mang.Services.RewardAPI.Services;
 using Microsoft.EntityFrameworkCore;
 
