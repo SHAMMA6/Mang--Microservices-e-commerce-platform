@@ -3,6 +3,7 @@ using Mang.MessageBusService;
 using Mang.Services.OrderAPI;
 using Mang.Services.OrderAPI.Data;
 using Mang.Services.OrderAPI.Extentions;
+using Mang.Services.OrderAPI.RabbitMQSender;
 using Mang.Services.OrderAPI.Service;
 using Mang.Services.OrderAPI.Service.IService;
 using Mang.Services.OrderAPI.Utility;
@@ -24,7 +25,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BackendApiAuthenticationHttpClientHandler>();
-builder.Services.AddScoped<IMessageBus, MessageBus>();
+builder.Services.AddScoped<IRabbitMQOrderMessageSender, RabbitMQOrderMessageSender>();
 
 builder.Services.AddHttpClient("Product", u => u.BaseAddress =
 new Uri(builder.Configuration["ServiceUrls:ProductAPI"])).AddHttpMessageHandler<BackendApiAuthenticationHttpClientHandler>();

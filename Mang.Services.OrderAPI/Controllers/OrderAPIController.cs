@@ -12,6 +12,7 @@ using Mang.Services.OrderAPI.Utility;
 using Microsoft.EntityFrameworkCore;
 using Stripe.Checkout;
 using Stripe;
+using Mang.Services.OrderAPI.RabbitMQSender;
 
 namespace Mang.Services.OrderAPI.Controllers
 {
@@ -23,11 +24,11 @@ namespace Mang.Services.OrderAPI.Controllers
         private IMapper _mapper;
         private readonly AppDbContext _db;
         private IProductService _productService;
-        private readonly IMessageBus _messageBus;
+        private readonly IRabbitMQOrderMessageSender _messageBus;
         private readonly IConfiguration _configuration;
         public OrderAPIController(AppDbContext db,
             IProductService productService, IMapper mapper, IConfiguration configuration
-            , IMessageBus messageBus)
+            , IRabbitMQOrderMessageSender messageBus)
         {
             _db = db;
             _messageBus = messageBus;
@@ -199,7 +200,7 @@ namespace Mang.Services.OrderAPI.Controllers
                         UserId = orderHeader.UserId
                     };
                     string topicName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
-                    await _messageBus.PublishMessageAsync(rewardsDto, topicName);
+                    _messageBus.SendMessage(rewardsDto, topicName);
                     _response.Result = _mapper.Map<OrderHeaderDto>(orderHeader);
                 }
 

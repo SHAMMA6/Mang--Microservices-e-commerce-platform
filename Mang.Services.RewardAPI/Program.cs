@@ -1,6 +1,6 @@
-using Mang.Services.RewardAPI.Messaging;
+
 using Mang.Services.RewardAPI.Data;
-using Mang.Services.RewardAPI.Extentions;
+//using Mang.Services.RewardAPI.Extentions;
 
 using Mang.Services.RewardAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -21,7 +21,7 @@ var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("Portal"));
 builder.Services.AddSingleton(new RewardService(optionBuilder.Options));
 
-builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
+//builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 
 var app = builder.Build();
 
@@ -39,7 +39,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 ApplyMigration();
-app.UseAzureServiceBusConsumer();
+//app.UseAzureServiceBusConsumer();
 app.Run();
 
 

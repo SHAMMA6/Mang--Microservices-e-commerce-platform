@@ -1,5 +1,5 @@
 using Mang.Services.EmailAPI.Data;
-using Mang.Services.EmailAPI.Extentions;
+//using Mang.Services.EmailAPI.Extentions;
 using Mang.Services.EmailAPI.Messaging;
 using Mang.Services.EmailAPI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -21,8 +21,11 @@ var optionBuilder = new DbContextOptionsBuilder<AppDbContext>();
 optionBuilder.UseSqlServer(builder.Configuration.GetConnectionString("Portal"));
 builder.Services.AddSingleton(new EmailService(optionBuilder.Options));
 
+builder.Services.AddHostedService<RabbitMQAuthConsumer>();
+builder.Services.AddHostedService<RabbitMQCartConsumer>();
+builder.Services.AddHostedService<RabbitMQOrderConsumer>();
 
-builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
+//builder.Services.AddSingleton<IAzureServiceBusConsumer, AzureServiceBusConsumer>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -47,7 +50,7 @@ app.UseAuthorization();
 
 app.MapControllers();
 ApplyMigration();
-app.UseAzureServiceBusConsumer();
+//app.UseAzureServiceBusConsumer();
 app.Run();
 
 
