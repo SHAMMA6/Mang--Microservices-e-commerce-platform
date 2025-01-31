@@ -8,6 +8,7 @@ using Mang.Services.ShoppingCartAPI.RabbitMQSender;
 using Mang.Services.ShoppingCartAPI.Service;
 using Mang.Services.ShoppingCartAPI.Service.IService;
 using Mang.Services.ShoppingCartAPI.Utility;
+using Mango.Services.ShoppingCartAPI.RabbmitMQSender;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
@@ -27,7 +28,7 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<BackendApiAuthenticationHttpClientHandler>();
 builder.Services.AddScoped<ICouponService, CouponService>();
-builder.Services.AddScoped<IRabbitMQCartMessageSender, RabbitMQCartMessageSender>();
+builder.Services.AddScoped<IRabbmitMQCartMessageSender, RabbmitMQCartMessageSender>();
 
 builder.Services.AddHttpClient("Product", u => u.BaseAddress =
 new Uri(builder.Configuration["ServiceUrls:ProductAPI"])).AddHttpMessageHandler<BackendApiAuthenticationHttpClientHandler>();

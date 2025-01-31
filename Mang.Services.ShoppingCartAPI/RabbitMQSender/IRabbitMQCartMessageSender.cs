@@ -1,7 +1,7 @@
 ﻿namespace Mang.Services.ShoppingCartAPI.RabbitMQSender
 {
-    public interface IRabbitMQCartMessageSender
+    public interface IRabbmitMQCartMessageSender
     {
-        void SendMessage(Object message,string queueName);
+        void SendMessage(Object message, string queueName);
     }
 }

@@ -1,5 +1,4 @@
 ﻿using Mang.Services.RewardAPI.Message;
-
 using Mang.Services.RewardAPI.Services;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
@@ -13,68 +12,52 @@ namespace Mang.Services.RewardAPI.Messaging
     {
         private readonly IConfiguration _configuration;
         private readonly RewardService _rewardService;
-
         private IConnection _connection;
-        private IChannel _channel;
+        private IModel _channel;
         private const string OrderCreated_RewardsUpdateQueue = "RewardsUpdateQueue";
-        private string ExchangName = "";
-        string queueName = "";
-
+        private string ExchangeName = "";
         public RabbitMQOrderConsumer(IConfiguration configuration, RewardService rewardService)
         {
             _configuration = configuration;
             _rewardService = rewardService;
-
-            InitializeRabbitMQAsync().GetAwaiter().GetResult();
-        }
-
-        private async Task InitializeRabbitMQAsync()
-        {
+            ExchangeName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
             var factory = new ConnectionFactory
             {
                 HostName = "localhost",
+                Password = "guest",
                 UserName = "guest",
-                Password = "guest"
             };
+            _connection = factory.CreateConnection();
+            _channel = _connection.CreateModel();
+            _channel.ExchangeDeclare(ExchangeName, ExchangeType.Direct);
 
-            _connection = await factory.CreateConnectionAsync();
-            _channel = await _connection.CreateChannelAsync();
-
-            string queueName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic",ExchangeType.Direct);
-            await _channel.QueueDeclareAsync(OrderCreated_RewardsUpdateQueue,false,false,false,null);
-            await _channel.QueueBindAsync(OrderCreated_RewardsUpdateQueue, ExchangName, routingKey: "RewardsUpdate");
+            _channel.QueueDeclare(OrderCreated_RewardsUpdateQueue, false, false, false, null);
+            _channel.QueueBind(OrderCreated_RewardsUpdateQueue, ExchangeName, "RewardsUpdate");
         }
+
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            var consumer = new AsyncEventingBasicConsumer(_channel);
-            consumer.ReceivedAsync += async (model, ea) =>
+            stoppingToken.ThrowIfCancellationRequested();
+
+            var consumer = new EventingBasicConsumer(_channel);
+            consumer.Received += (ch, ea) =>
             {
                 var content = Encoding.UTF8.GetString(ea.Body.ToArray());
-                RewardsMessage rewardMessage = JsonConvert.DeserializeObject<RewardsMessage>(content);
+                RewardsMessage rewardsMessage = JsonConvert.DeserializeObject<RewardsMessage>(content);
+                HandleMessage(rewardsMessage).GetAwaiter().GetResult();
 
-                await HandleMessageAsync(rewardMessage);
-                await _channel.BasicAckAsync(ea.DeliveryTag, false);
+                _channel.BasicAck(ea.DeliveryTag, false);
             };
 
-            string queueName = _configuration.GetValue<string>("TopicAndQueueNames:OrderCreatedTopic");
-            _channel.BasicConsumeAsync(queue: OrderCreated_RewardsUpdateQueue, autoAck: false, consumer: consumer);
+            _channel.BasicConsume(OrderCreated_RewardsUpdateQueue, false, consumer);
 
             return Task.CompletedTask;
         }
 
-        private async Task HandleMessageAsync(RewardsMessage rewardMessage)
+        private async Task HandleMessage(RewardsMessage rewardsMessage)
         {
-            await _rewardService.UpdateRewards(rewardMessage);
-        }
-
-        public override void Dispose()
-        {
-            _channel?.CloseAsync();
-            _channel?.Dispose();
-            _connection?.CloseAsync();
-            _connection?.Dispose();
-            base.Dispose();
+            _rewardService.UpdateRewards(rewardsMessage).GetAwaiter().GetResult();
         }
     }
 }

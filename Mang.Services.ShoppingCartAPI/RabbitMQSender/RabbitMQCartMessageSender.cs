@@ -1,65 +1,65 @@
-﻿using RabbitMQ.Client;
+﻿using Mang.Services.ShoppingCartAPI.RabbitMQSender;
+using Newtonsoft.Json;
+using RabbitMQ.Client;
+using System.Text;
 
-namespace Mang.Services.ShoppingCartAPI.RabbitMQSender
+namespace Mango.Services.ShoppingCartAPI.RabbmitMQSender
 {
-    public class RabbitMQCartMessageSender : IRabbitMQCartMessageSender
+    public class RabbmitMQCartMessageSender : IRabbmitMQCartMessageSender
     {
+
         private readonly string _hostName;
-        private readonly string _userName;
+        private readonly string _username;
         private readonly string _password;
         private IConnection _connection;
 
-        public RabbitMQCartMessageSender()
+        public RabbmitMQCartMessageSender()
         {
             _hostName = "localhost";
-            _userName = "guest";
             _password = "guest";
+            _username = "guest";
         }
-        public async void SendMessage(object message, string queueName)
+
+        public void SendMessage(object message, string queueName)
         {
             if (ConnectionExists())
             {
-                using var channel = await _connection.CreateChannelAsync();
-                await channel.QueueDeclareAsync(queue: queueName,
-                                     durable: false,
-                                     exclusive: false,
-                                     autoDelete: false,
-                                     arguments: null);
 
-                var json = System.Text.Json.JsonSerializer.Serialize(message);
-                var body = System.Text.Encoding.UTF8.GetBytes(json);
-
-                await channel.BasicPublishAsync(exchange: "",
-                                     routingKey: queueName,
-                                     body: body);
+                using var channel = _connection.CreateModel();
+                channel.QueueDeclare(queueName, false, false, false, null);
+                var json = JsonConvert.SerializeObject(message);
+                var body = Encoding.UTF8.GetBytes(json);
+                channel.BasicPublish(exchange: "", routingKey: queueName, null, body: body);
             }
+
         }
 
-        private async Task CreateConnectionAsync()
+        private void CreateConnection()
         {
             try
             {
-                var factory = new ConnectionFactory()
+                var factory = new ConnectionFactory
                 {
                     HostName = _hostName,
-                    UserName = _userName,
-                    Password = _password
+                    Password = _password,
+                    UserName = _username
                 };
 
-                _connection = await factory.CreateConnectionAsync();
+                _connection = factory.CreateConnection();
             }
-            catch (System.Exception)
+            catch (Exception ex)
             {
-                
+
             }
         }
+
         private bool ConnectionExists()
         {
             if (_connection != null)
             {
                 return true;
             }
-            CreateConnectionAsync().GetAwaiter();
+            CreateConnection();
             return true;
         }
     }

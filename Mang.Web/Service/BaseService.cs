@@ -2,6 +2,7 @@
 using Mang.Web.Service.IService;
 using Newtonsoft.Json;
 using System.Linq.Expressions;
+using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -15,28 +16,31 @@ namespace Mang.Web.Service
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ITokenProvider _tokenProvider;
-
         public BaseService(IHttpClientFactory httpClientFactory, ITokenProvider tokenProvider)
         {
             _httpClientFactory = httpClientFactory;
             _tokenProvider = tokenProvider;
         }
+
         public async Task<ResponseDto?> SendAsync(RequestDto requestDto, bool withBearer = true)
         {
             try
             {
-                HttpClient client = _httpClientFactory.CreateClient("MangAPI");
+                HttpClient client = _httpClientFactory.CreateClient("MangoAPI");
                 HttpRequestMessage message = new();
-                message.Headers.Add("Accept", "application/json");
-
-                //Token 5 15 
+                if (requestDto.ContentType == ContentType.MultipartFormData)
+                {
+                    message.Headers.Add("Accept", "*/*");
+                }
+                else
+                {
+                    message.Headers.Add("Accept", "application/json");
+                }
+                //token
                 if (withBearer)
                 {
                     var token = _tokenProvider.GetToken();
-                    if (token != null)
-                    {
-                        message.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                    }
+                    message.Headers.Add("Authorization", $"Bearer {token}");
                 }
 
                 message.RequestUri = new Uri(requestDto.Url);
@@ -51,15 +55,14 @@ namespace Mang.Web.Service
                         if (value is FormFile)
                         {
                             var file = (FormFile)value;
-                            if (file != null) 
+                            if (file != null)
                             {
                                 content.Add(new StreamContent(file.OpenReadStream()), prop.Name, file.FileName);
                             }
                         }
                         else
                         {
-                            ///
-                            content.Add(new StringContent(prop.GetValue(requestDto.Data).ToString()), prop.Name);
+                            content.Add(new StringContent(value == null ? "" : value.ToString()), prop.Name);
                         }
                     }
                     message.Content = content;
@@ -68,13 +71,15 @@ namespace Mang.Web.Service
                 {
                     if (requestDto.Data != null)
                     {
-                    message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data), Encoding.UTF8, "application/json");
+                        message.Content = new StringContent(JsonConvert.SerializeObject(requestDto.Data), Encoding.UTF8, "application/json");
                     }
-
                 }
 
-               
-                HttpResponseMessage? apiresponse = null;
+
+
+
+
+                HttpResponseMessage? apiResponse = null;
 
                 switch (requestDto.ApiType)
                 {
@@ -92,35 +97,33 @@ namespace Mang.Web.Service
                         break;
                 }
 
-                apiresponse = await client.SendAsync(message);
+                apiResponse = await client.SendAsync(message);
 
-                switch (apiresponse.StatusCode)
+                switch (apiResponse.StatusCode)
                 {
-                    case System.Net.HttpStatusCode.NotFound:
+                    case HttpStatusCode.NotFound:
                         return new() { IsSuccess = false, Message = "Not Found" };
-                    case System.Net.HttpStatusCode.Forbidden:
+                    case HttpStatusCode.Forbidden:
                         return new() { IsSuccess = false, Message = "Access Denied" };
-                    case System.Net.HttpStatusCode.Unauthorized:
+                    case HttpStatusCode.Unauthorized:
                         return new() { IsSuccess = false, Message = "Unauthorized" };
-                    case System.Net.HttpStatusCode.InternalServerError:
+                    case HttpStatusCode.InternalServerError:
                         return new() { IsSuccess = false, Message = "Internal Server Error" };
                     default:
-                        var apiContent = await apiresponse.Content.ReadAsStringAsync();
+                        var apiContent = await apiResponse.Content.ReadAsStringAsync();
                         var apiResponseDto = JsonConvert.DeserializeObject<ResponseDto>(apiContent);
                         return apiResponseDto;
-
                 }
             }
             catch (Exception ex)
             {
-                var dto = new ResponseDto()
+                var dto = new ResponseDto
                 {
                     Message = ex.Message.ToString(),
                     IsSuccess = false
                 };
                 return dto;
             }
-            }
-            
+        }
     }
 }

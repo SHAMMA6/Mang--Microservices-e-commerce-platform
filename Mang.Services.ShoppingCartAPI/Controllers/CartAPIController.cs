@@ -21,14 +21,14 @@ namespace Mang.Services.ShoppingCartAPI.Controllers
         private IProductService _productService;
         private ICouponService _couponService;
         private IConfiguration _configuration;
-        private readonly IRabbitMQCartMessageSender _messageBus;
+        private readonly IRabbmitMQCartMessageSender _messageBus;
 
         public CartAPIController(AppDbContext db,
             IMapper mapper,
             IProductService productService,
             ICouponService couponService,
             IConfiguration configuration,
-            IRabbitMQCartMessageSender messageBus)
+            IRabbmitMQCartMessageSender messageBus)
         {
             _db = db;
             _productService = productService;

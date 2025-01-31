@@ -4,6 +4,7 @@ using Mang.Services.AuthAPI.Models;
 using Mang.Services.AuthAPI.RabbitMQSender;
 using Mang.Services.AuthAPI.Service;
 using Mang.Services.AuthAPI.Service.IService;
+using Mango.Services.AuthAPI.RabbmitMQSender;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +30,7 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection("ApiSett
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IJwtTokenGenerator, JwtTokenGenerator>();
-builder.Services.AddScoped<IRabbitMQAuthMessageSender, RabbitMQAuthMessageSender>();
+builder.Services.AddScoped<IRabbmitMQAuthMessageSender, RabbmitMQAuthMessageSender>();
 
 
 

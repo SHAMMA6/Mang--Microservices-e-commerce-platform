@@ -8,17 +8,17 @@ namespace Mang.Web.Service
     public class AuthService : IAuthService
     {
         private readonly IBaseService _baseService;
-
         public AuthService(IBaseService baseService)
         {
             _baseService = baseService;
         }
-        public async Task<ResponseDto?> AssignRoleAsync(RegistrationRequestDto registretionRequestDto)
+
+        public async Task<ResponseDto?> AssignRoleAsync(RegistrationRequestDto registrationRequestDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
-                Data = registretionRequestDto,
+                Data = registrationRequestDto,
                 Url = SD.AuthAPIBase + "/api/auth/AssignRole"
             });
         }
@@ -33,14 +33,14 @@ namespace Mang.Web.Service
             }, withBearer: false);
         }
 
-        public async Task<ResponseDto?> RegisterAsync(RegistrationRequestDto registretionRequestDto)
+        public async Task<ResponseDto?> RegisterAsync(RegistrationRequestDto registrationRequestDto)
         {
             return await _baseService.SendAsync(new RequestDto()
             {
                 ApiType = SD.ApiType.POST,
-                Data = registretionRequestDto,
+                Data = registrationRequestDto,
                 Url = SD.AuthAPIBase + "/api/auth/register"
-            }, withBearer:false);
+            }, withBearer: false);
         }
     }
 }

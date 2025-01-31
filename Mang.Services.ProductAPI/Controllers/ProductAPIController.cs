@@ -29,7 +29,7 @@ namespace Mang.Services.ProductAPI.Controllers
             try
             {
                 IEnumerable<Product> objList = _db.Products.ToList();
-                _response.Resulte = _mapper.Map<IEnumerable<ProductDto>>(objList);
+                _response.Result = _mapper.Map<IEnumerable<ProductDto>>(objList);
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace Mang.Services.ProductAPI.Controllers
             try
             {
                 Product obj = _db.Products.First(u => u.ProductId == id);
-                _response.Resulte = _mapper.Map<ProductDto>(obj);
+                _response.Result = _mapper.Map<ProductDto>(obj);
             }
             catch (Exception ex)
             {
@@ -95,7 +95,7 @@ namespace Mang.Services.ProductAPI.Controllers
                 }
                 _db.Products.Update(product);
                 _db.SaveChanges();
-                _response.Resulte = _mapper.Map<ProductDto>(product);
+                _response.Result = _mapper.Map<ProductDto>(product);
             }
             catch (Exception ex)
             {
@@ -142,7 +142,7 @@ namespace Mang.Services.ProductAPI.Controllers
                 _db.Products.Update(product);
                 _db.SaveChanges();
 
-                _response.Resulte = _mapper.Map<ProductDto>(product);
+                _response.Result = _mapper.Map<ProductDto>(product);
             }
             catch (Exception ex)
             {

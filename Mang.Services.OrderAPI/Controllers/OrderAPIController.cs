@@ -24,11 +24,11 @@ namespace Mang.Services.OrderAPI.Controllers
         private IMapper _mapper;
         private readonly AppDbContext _db;
         private IProductService _productService;
-        private readonly IRabbitMQOrderMessageSender _messageBus;
+        private readonly IRabbmitMQOrderMessageSender _messageBus;
         private readonly IConfiguration _configuration;
         public OrderAPIController(AppDbContext db,
             IProductService productService, IMapper mapper, IConfiguration configuration
-            , IRabbitMQOrderMessageSender messageBus)
+            , IRabbmitMQOrderMessageSender messageBus)
         {
             _db = db;
             _messageBus = messageBus;

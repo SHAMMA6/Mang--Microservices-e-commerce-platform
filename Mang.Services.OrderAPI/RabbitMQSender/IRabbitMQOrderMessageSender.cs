@@ -1,7 +1,9 @@
 ﻿namespace Mang.Services.OrderAPI.RabbitMQSender
 {
-    public interface IRabbitMQOrderMessageSender
+
+    public interface IRabbmitMQOrderMessageSender
     {
-        void SendMessage(Object message,string exchangName);
+        void SendMessage(Object message, string exchangeName);
     }
 }
+

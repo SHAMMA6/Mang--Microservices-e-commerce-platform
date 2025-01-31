@@ -13,10 +13,10 @@ namespace Mang.Services.AuthAPI.Controllers
     public class AuthAPIController : ControllerBase
     {
         private readonly IAuthService _authService;
-        private readonly IRabbitMQAuthMessageSender _messageBus;
+        private readonly IRabbmitMQAuthMessageSender _messageBus;
         private readonly IConfiguration _configuration;
         protected ResponseDto _response;
-        public AuthAPIController(IAuthService authService, IRabbitMQAuthMessageSender messageBus, IConfiguration configuration)
+        public AuthAPIController(IAuthService authService, IRabbmitMQAuthMessageSender messageBus, IConfiguration configuration)
         {
             _authService = authService;
             _configuration = configuration;
@@ -37,7 +37,7 @@ namespace Mang.Services.AuthAPI.Controllers
                 _response.Message = errorMessage;
                 return BadRequest(_response);
             }
-             _messageBus.SendMessage(model.Email, _configuration.GetValue<string>("TopicAndQueueNames:RegisterUserQueue"));
+            _messageBus.SendMessage(model.Email, _configuration.GetValue<string>("TopicAndQueueNames:RegisterUserQueue"));
             return Ok(_response);
         }
 

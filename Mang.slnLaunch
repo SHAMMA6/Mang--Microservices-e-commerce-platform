@@ -31,10 +31,6 @@
         "Action": "Start"
       },
       {
-        "Path": "Mang.GatewaySolution\\Mang.GatewaySolution.csproj",
-        "Action": "Start"
-      },
-      {
         "Path": "Mang.Services.EmailAPI\\Mang.Services.EmailAPI.csproj",
         "Action": "Start"
       }
